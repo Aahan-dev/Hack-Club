@@ -88,4 +88,31 @@ class Menu_Object:
             if order in menu:
                 index = menu.index(order)
                 self.price = Drink_Menu[index] if index < len(Drink_Menu) else Food_Menu[index - len(Drink_Menu)]
+    # Creates a function to calculate the total cost of the menu item
+    def calculate_total(self, orders):
+        total = 0
+        for order in orders:
+            index = menu.index(order)
+            price = Drink_Menu[index] if index < len(Drink_Menu) else Food_Menu[index - len(Drink_Menu)]
+            
+            # Extract the price from the menu item and accumulate the total
+            total += float(price.split(": $")[1].split(",")[0])
+        
+        return total
     
+    def get_price(self, decision):
+        if decision == "yes":
+            total_cost = self.calculate_total(self.orders)
+            
+            # Display the total cost and prompt for payment
+            print("You have to pay $:", total_cost)
+            self.price = input("Press any key and ENTER to pay! ")
+            print("Thank you for your order! Come back soon!")
+
+
+# Create an instance of the Menu_Object class
+Menu_Item = Menu_Object("", "", "")
+
+# Call the methods based on the user's decision
+Menu_Item.get_name(decision)
+Menu_Item.get_price(decision)
