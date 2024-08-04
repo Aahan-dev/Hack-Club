@@ -41,3 +41,51 @@ Food_Menu = [
     "Ramen: $20, A Japanese noodle soup with broth, noodles, and toppings \n",
     "Sushi: $25, Vinegared rice rolls with various fillings \n",
 ]
+# Define the complete menu list
+menu = [
+    "Espresso", "Cappuccino", "Latte", "Americano", "Hot Chocolate",
+    "Tea", "Milk Shake", "Mocha", "Coffee", "French Fries",
+    "Burger", "Pizza", "Chicken Wings", "Sandwich", "Pasta",
+    "Risotto", "Ramen", "Sushi"
+]
+
+# Convert menu items to lowercase for case-insensitive matching
+menu = [menu_item.lower() for menu_item in menu]
+
+# Define a class for the menu item object
+class Menu_Object:
+    def __init__(self, name, price, description):
+        self.name = name
+        self.price = price
+        self.description = description
+        self.orders = []  # Initialize an empty list to store orders
+
+    # Creating a function under the Menu_Object class to get the name of the menu item
+    def get_name(self, decision):
+        if decision == "yes":
+            # Display the food and drinks menu
+            print(Fore.YELLOW + "Food Menu:")
+            print(Fore.YELLOW + "\n".join(Food_Menu))
+            print(Fore.YELLOW + "Drinks Menu:")
+            print(Fore.YELLOW + "\n".join(Drink_Menu))
+            
+            self.orders = []  # Reset the orders list
+            order = input("What would you like to order? ").lower()
+            
+            # Prompt for orders until the user types "done"
+            while order != "done":
+                if order in menu:
+                    self.orders.append(order)  # Add the valid order to the orders list
+                else:
+                    print("Please choose from the menu provided.")
+                    print()
+                    time.sleep(1)
+                order = input("What would you like to order? (Type done to stop): ").lower()
+            
+            self.name = order  # Set the name of the menu item to the last order
+            
+            # Set the price of the menu item based on the index in the menu list
+            if order in menu:
+                index = menu.index(order)
+                self.price = Drink_Menu[index] if index < len(Drink_Menu) else Food_Menu[index - len(Drink_Menu)]
+    
